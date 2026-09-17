@@ -7,6 +7,7 @@ import SecurityManagerModal from '../components/tw-security-manager-modal/securi
 import SecurityModals from '../lib/tw-security-manager-constants';
 import {getPersistedUnsandboxed, setPersistedUnsandboxed} from '../lib/tw-persisted-unsandboxed.js';
 import {isTrustedSameOriginExtension, loadEkoleExtension} from '../lib/ekole-extension.js';
+import {getIsError, getIsShowingProject} from '../reducers/project-state';
 
 /* eslint-disable require-atomic-updates */
 
@@ -172,8 +173,25 @@ class TWSecurityManagerComponent extends React.Component {
         for (const method of SECURITY_MANAGER_METHODS) {
             vmSecurityManager[method] = propsSecurityManager[method] || this[method];
         }
-        // ekole: now that same-origin /scratch/ extensions are trusted, load Classify4Kids at startup
-        loadEkoleExtension(this.props.vm);
+        // ekole: same-origin /scratch/ extensions are now trusted
+        this.loadEkoleExtensionIfIdle();
+    }
+
+    componentDidUpdate (prevProps) {
+        if (this.props.isProjectIdle && !prevProps.isProjectIdle) {
+            this.loadEkoleExtensionIfIdle();
+        }
+    }
+
+    /**
+     * ekole: load the Classify4Kids extension (once) as soon as no project is loading.
+     * While a project loads, the VM waits for pending extensions: a failed extension load would make
+     * that project fail too, and a project using the same URL would load the extension twice.
+     */
+    loadEkoleExtensionIfIdle () {
+        if (this.props.isProjectIdle) {
+            loadEkoleExtension(this.props.vm);
+        }
     }
 
     // eslint-disable-next-line valid-jsdoc
@@ -472,7 +490,8 @@ TWSecurityManagerComponent.propTypes = {
             ).isRequired
         }).isRequired
     }).isRequired,
-    securityManager: PropTypes.shape(Object.fromEntries(SECURITY_MANAGER_METHODS.map(i => [i, PropTypes.func])))
+    securityManager: PropTypes.shape(Object.fromEntries(SECURITY_MANAGER_METHODS.map(i => [i, PropTypes.func]))),
+    isProjectIdle: PropTypes.bool
 };
 
 TWSecurityManagerComponent.defaultProps = {
@@ -480,7 +499,10 @@ TWSecurityManagerComponent.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-    vm: state.scratchGui.vm
+    vm: state.scratchGui.vm,
+    // ekole: a project is shown (or failed to load), so nothing waits for extensions
+    isProjectIdle: getIsShowingProject(state.scratchGui.projectState.loadingState) ||
+        getIsError(state.scratchGui.projectState.loadingState)
 });
 
 const mapDispatchToProps = () => ({});

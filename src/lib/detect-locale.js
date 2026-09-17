@@ -1,6 +1,7 @@
 /**
  * @fileoverview
- * Utility function to detect locale from the browser setting or paramenter on the URL.
+ * Utility function to detect locale from the saved language or a parameter on the URL.
+ * ekole: French by default, the browser setting is ignored.
  */
 
 import queryString from 'query-string';

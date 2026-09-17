@@ -4,8 +4,8 @@
  * (camera, DOM, IndexedDB of the origin), so it cannot run in TurboWarp's sandbox.
  *
  * - Scripts under /scratch/ on the SAME origin are trusted: they load unsandboxed, without a prompt.
- * - The Classify4Kids extension is loaded once when the editor starts, so projects that use it
- *   (whatever URL they saved) find it already loaded.
+ * - The Classify4Kids extension is loaded once when the editor is ready (first project shown),
+ *   so projects opened afterwards that use it (whatever URL they saved) find it already loaded.
  * Every other custom extension keeps TurboWarp's behaviour (sandbox and prompts).
  */
 import log from './log';
@@ -94,7 +94,8 @@ const loadIfAvailable = async (vm, url, fetchFn) => {
 
 /**
  * Load the Classify4Kids extension from the page's origin, once per VM.
- * Call it after the GUI security manager is installed, otherwise the VM would sandbox it.
+ * Call it after the GUI security manager is installed (otherwise the VM would sandbox it) and while
+ * no project is loading (see tw-security-manager.jsx).
  * @param {object} vm scratch-vm instance.
  * @param {object} [options] Options.
  * @param {string} [options.origin] Origin of the page, defaults to the current one.
