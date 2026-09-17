@@ -1103,16 +1103,7 @@ class AddonSettingsComponent extends React.Component {
                                 onClick={this.handleClickSearchButton}
                             />
                         </div>
-                        <a
-                            href="https://scratch.mit.edu/users/GarboMuffin/#comments"
-                            target="_blank"
-                            rel="noreferrer"
-                            className={styles.feedbackButtonOuter}
-                        >
-                            <span className={styles.feedbackButtonInner}>
-                                {settingsTranslations.addonFeedback}
-                            </span>
-                        </a>
+                        {/* ekole: no "Addon Feedback" link to the TurboWarp developer's Scratch profile */}
                     </div>
                     {this.state.dirty && (
                         <Dirty

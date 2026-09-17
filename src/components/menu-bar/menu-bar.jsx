@@ -106,7 +106,8 @@ import sharedMessages from '../../lib/shared-messages';
 
 import SeeInsideButton from './tw-see-inside.jsx';
 import {notScratchDesktop} from '../../lib/isScratchDesktop.js';
-import {APP_NAME} from '../../lib/brand.js';
+import {APP_NAME, ABOUT_TEXT, SOURCE_CODE_URL} from '../../lib/brand.js';
+import ekoleLogo from '../../../static/images/blocs-ekole.svg';
 
 const ariaMessages = defineMessages({
     tutorials: {
@@ -189,23 +190,6 @@ const AboutButton = props => (
 
 AboutButton.propTypes = {
     onClick: PropTypes.func.isRequired
-};
-
-// Unlike <MenuItem href="">, this uses an actual <a>
-const MenuItemLink = props => (
-    <a
-        href={props.href}
-        rel="noreferrer"
-        target="_blank"
-        className={styles.menuItemLink}
-    >
-        <MenuItem>{props.children}</MenuItem>
-    </a>
-);
-
-MenuItemLink.propTypes = {
-    children: PropTypes.node.isRequired,
-    href: PropTypes.string.isRequired
 };
 
 class MenuBar extends React.Component {
@@ -491,6 +475,26 @@ class MenuBar extends React.Component {
                 )}
             >
                 <div className={styles.mainMenu}>
+                    {/* ekole: logo and name, link to the About page */}
+                    <div className={classNames(styles.menuBarItem, styles.hoverable, styles.ekoleLogoItem)}>
+                        <a
+                            className={styles.ekoleLogoLink}
+                            href="credits.html"
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            title={ABOUT_TEXT}
+                        >
+                            <img
+                                alt=""
+                                className={styles.ekoleLogo}
+                                draggable={false}
+                                height={28}
+                                src={ekoleLogo}
+                                width={28}
+                            />
+                            <span className={styles.collapsibleLabel}>{APP_NAME}</span>
+                        </a>
+                    </div>
                     <div className={styles.fileGroup}>
                         {this.props.errors.length > 0 && <div>
                             <MenuLabel
@@ -516,20 +520,14 @@ class MenuBar extends React.Component {
                                     place={this.props.isRtl ? 'left' : 'right'}
                                 >
                                     <MenuSection>
-                                        <MenuItemLink href="https://scratch.mit.edu/users/GarboMuffin/#comments">
+                                        {/* ekole: no link to report bugs to the TurboWarp developer */}
+                                        <MenuItem>
                                             <FormattedMessage
                                                 defaultMessage="Some scripts encountered errors."
                                                 description="Link in error menu"
                                                 id="tw.menuBar.reportError1"
                                             />
-                                        </MenuItemLink>
-                                        <MenuItemLink href="https://scratch.mit.edu/users/GarboMuffin/#comments">
-                                            <FormattedMessage
-                                                defaultMessage="This is a bug. Please report it."
-                                                description="Link in error menu"
-                                                id="tw.menuBar.reportError2"
-                                            />
-                                        </MenuItemLink>
+                                        </MenuItem>
                                     </MenuSection>
                                     <MenuSection>
                                         {this.props.errors.map(({id, sprite, error}) => (
@@ -1011,23 +1009,19 @@ class MenuBar extends React.Component {
                             />
                         ) : []))}
                     </div>
-                    {/* tw: add a feedback button */}
+                    {/* ekole: the TurboWarp feedback button is replaced by the source code link (GPL-3.0) */}
                     <div className={styles.menuBarItem}>
                         <a
                             className={styles.feedbackLink}
-                            href="https://scratch.mit.edu/users/GarboMuffin/#comments"
+                            href={SOURCE_CODE_URL}
                             rel="noopener noreferrer"
                             target="_blank"
                         >
-                            {/* todo: icon */}
                             <Button className={styles.feedbackButton}>
                                 <FormattedMessage
-                                    defaultMessage="{APP_NAME} Feedback"
-                                    description="Button to give feedback in the menu bar"
-                                    id="tw.feedbackButton"
-                                    values={{
-                                        APP_NAME
-                                    }}
+                                    defaultMessage="Source Code"
+                                    description="Link to source code"
+                                    id="tw.code"
                                 />
                             </Button>
                         </a>

@@ -22,7 +22,8 @@ const ACCENT_MAP = {
     [ACCENT_RED]: accentRed,
     [ACCENT_RAINBOW]: accentRainbow
 };
-const ACCENT_DEFAULT = ACCENT_RED;
+// ekole: purple accent by default (Scratch-like, not TurboWarp's red). Keep src/playground/index.ejs in sync.
+const ACCENT_DEFAULT = ACCENT_PURPLE;
 
 const GUI_LIGHT = 'light';
 const GUI_DARK = 'dark';

@@ -95,6 +95,24 @@
     padding: 0 0.5rem;
 }
 
+/* ekole: logo and name at the start of the menu bar */
+.ekole-logo-item {
+    padding: 0 0.5rem;
+}
+
+.ekole-logo-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+}
+
+.ekole-logo {
+    display: block;
+    border-radius: 6px;
+}
+
 .menu-bar-menu {
     margin-top: $menu-bar-height;
     z-index: $z-index-menu-bar;

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google" value="notranslate">
-    <meta name="description" content="<%= htmlWebpackPlugin.options.APP_NAME %> is a Scratch mod with a compiler to run projects faster, dark mode for your eyes, a bunch of addons to improve the editor, and more." />
+    <meta name="description" content="<%= htmlWebpackPlugin.options.APP_NAME %> : l'éditeur de programmation par blocs du club de code Ékole, basé sur TurboWarp et sur Scratch du MIT Media Lab." />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <%/* ekole: served under a sub-path, so the browser would otherwise ask for the favicon of the host site */%>
+    <link rel="icon" href="<%= htmlWebpackPlugin.options.root %>favicon.ico" sizes="48x48">
+    <link rel="icon" href="<%= htmlWebpackPlugin.options.root %>images/blocs-ekole.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.root %>images/apple-touch-icon.png">
     <% if (htmlWebpackPlugin.options.root === "/" || htmlWebpackPlugin.options.root === "") { %>
       <link rel="manifest" href="<%= htmlWebpackPlugin.options.root %>manifest.webmanifest">
@@ -79,8 +82,8 @@
     <noscript>
       <div class="splash-screen">
         <div>
-          <h1><%= htmlWebpackPlugin.options.APP_NAME %> requires JavaScript</h1>
-          <p>Consider using <a href="https://desktop.turbowarp.org/">TurboWarp Desktop</a> if you are afraid of remote JavaScript.</p>
+          <h1><%= htmlWebpackPlugin.options.APP_NAME %> a besoin de JavaScript</h1>
+          <p>Active JavaScript dans ton navigateur, puis recharge la page.</p>
         </div>
       </div>
     </noscript>
@@ -88,9 +91,9 @@
     <div class="splash-screen spash-waiting-for-js" hidden>
       <div class="splash-spinner"></div>
 
-      <div class="splash-error-title" hidden>Something went wrong. <a href="https://scratch.mit.edu/users/GarboMuffin/#comments" target="_blank" rel="noreferrer">Please report</a> with the information below.</div>
+      <div class="splash-error-title" hidden>Oups, un problème est survenu. Montre ce message à ton animatrice ou à ton animateur.</div>
       <div class="splash-errors" hidden></div>
-      <button class="splash-reset" hidden>Click here to reset caches (can fix some errors)</button>
+      <button class="splash-reset" hidden>Cliquer ici pour vider le cache (peut régler certaines erreurs)</button>
     </div>
 
     <script>
@@ -98,7 +101,8 @@
         'use strict';
 
         var theme = '';
-        var accent = '#ff4c4c';
+        // ekole: purple accent by default (see src/lib/themes/index.js)
+        var accent = '#855cd6';
 
         try {
           var themeSetting = localStorage.getItem('tw:theme');
@@ -112,8 +116,8 @@
         } else if (themeSetting) {
           try {
             var parsed = JSON.parse(themeSetting);
-            if (parsed.accent === 'purple') {
-              accent = '#855cd6';
+            if (parsed.accent === 'red') {
+              accent = '#ff4c4c';
             } else if (parsed.accent === 'blue') {
               accent = '#4c97ff';
             }
