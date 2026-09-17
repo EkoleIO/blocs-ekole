@@ -6,6 +6,7 @@ import bindAll from 'lodash.bindall';
 import SecurityManagerModal from '../components/tw-security-manager-modal/security-manager-modal.jsx';
 import SecurityModals from '../lib/tw-security-manager-constants';
 import {getPersistedUnsandboxed, setPersistedUnsandboxed} from '../lib/tw-persisted-unsandboxed.js';
+import {isTrustedSameOriginExtension, loadEkoleExtension} from '../lib/ekole-extension.js';
 
 /* eslint-disable require-atomic-updates */
 
@@ -29,6 +30,9 @@ const isTrustedExtension = url => (
 
     // For development.
     url.startsWith('http://localhost:8000/') ||
+
+    // ekole: Classify4Kids (and other Ékole scripts) served by this same origin under /scratch/
+    isTrustedSameOriginExtension(url) ||
 
     extensionsTrustedByUser.has(url)
 );
@@ -168,6 +172,8 @@ class TWSecurityManagerComponent extends React.Component {
         for (const method of SECURITY_MANAGER_METHODS) {
             vmSecurityManager[method] = propsSecurityManager[method] || this[method];
         }
+        // ekole: now that same-origin /scratch/ extensions are trusted, load Classify4Kids at startup
+        loadEkoleExtension(this.props.vm);
     }
 
     // eslint-disable-next-line valid-jsdoc
