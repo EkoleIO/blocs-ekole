@@ -333,12 +333,13 @@ const ConnectedInterface = injectIntl(connect(
     mapDispatchToProps
 )(Interface));
 
+// ekole: no TWPackagerIntegrationHOC here, so the File menu has no "Package project" item
+// (it opens packager.turbowarp.org)
 const WrappedInterface = compose(
     AppStateHOC,
     ErrorBoundaryHOC('TW Interface'),
     TWProjectMetaFetcherHOC,
-    TWStateManagerHOC,
-    TWPackagerIntegrationHOC
+    TWStateManagerHOC
 )(ConnectedInterface);
 
 export default WrappedInterface;

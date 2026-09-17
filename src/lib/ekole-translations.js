@@ -10,6 +10,7 @@ const ekoleTranslations = {
         'tw.menuBar.reportError1': 'Certains scripts ont rencontré des erreurs.',
         'tw.menuBar.accent': 'Couleur d\'accent',
         'tw.menuBar.blockColors': 'Couleurs des blocs',
+        'tw.lightMode': 'Basculer sur le mode sombre',
         'tw.blockColors.three': 'Originales',
         'tw.blockColors.dark': 'Sombres (bêta)',
         'tw.blockColors.custom': 'Personnaliser dans les modules',
