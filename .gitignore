@@ -26,3 +26,25 @@ npm-*
 
 # for act
 .secrets
+
+# --- Ékole : secrets (ajouté par scripts/harden-gitignore.sh) ---
+# Ne JAMAIS versionner d'identifiants. Gabarits autorisés : *.env.example
+.env
+.env.*
+!.env.example
+*.env
+!*.env.example
+.netlify/
+.netrc
+.npmrc
+*.pem
+*.p12
+*.pfx
+*.key
+id_rsa
+id_ed25519
+credentials.json
+service-account*.json
+secrets.json
+*.tokens.json
+.DS_Store
