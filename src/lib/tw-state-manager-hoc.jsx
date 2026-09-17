@@ -100,25 +100,21 @@ class FileHashRouter extends HashRouter {
         super(callbacks);
         this.playerPath = location.pathname.substring(0, location.pathname.lastIndexOf('/') + 1);
         this.editorPath = `${this.playerPath}editor.html`;
-        this.fullscreenPath = `${this.playerPath}fullscreen.html`;
     }
 
+    // ekole: Blocs Ékole only builds the editor, served at the folder URL (index.html, e.g. /blocs/)
+    // and at editor.html. Navigating back must never switch to TurboWarp's player homepage, and
+    // full screen does not change the URL (there is no fullscreen.html).
     onpathchange () {
         const pathName = location.pathname;
 
-        if (pathName === this.playerPath) {
-            this.onSetIsPlayerOnly(true);
-            this.onSetIsFullScreen(false);
-        } else if (pathName === this.editorPath) {
+        if (pathName === this.playerPath || pathName === this.editorPath) {
             this.onSetIsPlayerOnly(false);
             this.onSetIsFullScreen(false);
-        } else if (pathName === this.fullscreenPath) {
-            this.onSetIsFullScreen(true);
         }
     }
 
-    generateURL ({projectId, isPlayerOnly, isFullScreen}) {
-        let newPathname = '';
+    generateURL ({projectId}) {
         let newHash = '';
 
         if (projectId !== '0') {
@@ -129,15 +125,7 @@ class FileHashRouter extends HashRouter {
             newHash += `?${hashQuery}`;
         }
 
-        if (isFullScreen) {
-            newPathname = this.fullscreenPath;
-        } else if (isPlayerOnly) {
-            newPathname = this.playerPath;
-        } else {
-            newPathname = this.editorPath;
-        }
-
-        return `${newPathname}${location.search}${newHash ? `#${newHash}` : ''}`;
+        return `${this.playerPath}${location.search}${newHash ? `#${newHash}` : ''}`;
     }
 }
 

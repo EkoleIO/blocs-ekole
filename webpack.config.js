@@ -141,10 +141,9 @@ if (!process.env.CI) {
 module.exports = [
     // to run editor examples
     defaultsDeep({}, base, {
+        // ekole: no 'player' (TurboWarp homepage) nor 'fullscreen' page, the editor is the home page
         entry: {
             'editor': './src/playground/editor.jsx',
-            'player': './src/playground/player.jsx',
-            'fullscreen': './src/playground/fullscreen.jsx',
             'embed': './src/playground/embed.jsx',
             'addon-settings': './src/playground/addon-settings.jsx',
             'credits': './src/playground/credits/credits.jsx'
@@ -190,18 +189,13 @@ module.exports = [
                 isEditor: true,
                 ...htmlWebpackPluginCommon
             }),
+            // ekole: /blocs/ opens the editor directly (see FileHashRouter in tw-state-manager-hoc.jsx)
             new HtmlWebpackPlugin({
-                chunks: ['player'],
+                chunks: ['editor'],
                 template: 'src/playground/index.ejs',
                 filename: 'index.html',
                 title: APP_NAME,
-                ...htmlWebpackPluginCommon
-            }),
-            new HtmlWebpackPlugin({
-                chunks: ['fullscreen'],
-                template: 'src/playground/index.ejs',
-                filename: 'fullscreen.html',
-                title: APP_NAME,
+                isEditor: true,
                 ...htmlWebpackPluginCommon
             }),
             new HtmlWebpackPlugin({

@@ -12,7 +12,7 @@ const RenderGUI = props => (
         canSave={false}
         basePath={process.env.ROOT}
         canEditTitle
-        enableCommunity
+        // ekole: no enableCommunity, its "See Project Page" button opens TurboWarp's player homepage
         {...props}
     />
 );
