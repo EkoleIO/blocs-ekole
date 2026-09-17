@@ -1,0 +1,15 @@
+# Blocs Ékole — site statique servi sous /blocs/ (voir scripts/ekole-site.sh).
+# En production, les élèves passent par https://ekole-classify4kids.netlify.app/blocs/ (réécriture proxy 200)
+# pour partager l'origine de Classify4Kids : le détecteur entraîné est lu dans l'IndexedDB de cette origine.
+[build]
+  publish = "ekole-site"
+
+[[redirects]]
+  from = "/"
+  to = "/blocs/"
+  status = 302
+
+[[headers]]
+  for = "/blocs/*.html"
+  [headers.values]
+    Cache-Control = "max-age=0, must-revalidate"

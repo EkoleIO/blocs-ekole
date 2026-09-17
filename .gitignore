@@ -48,3 +48,6 @@ service-account*.json
 secrets.json
 *.tokens.json
 .DS_Store
+
+# Ékole : site assemblé pour Netlify
+/ekole-site
